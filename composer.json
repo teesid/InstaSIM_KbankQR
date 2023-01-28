@@ -1,0 +1,26 @@
+{
+  "name": "instasim/kbankqr",
+  "description": "InstaSIM - Kbank QR Code Payment",
+  "type": "magento-module",
+  "authors": [
+    {
+        "name": "Instasim Co. Ltd.",
+        "email": "support@instasim.com"
+    }
+  ],
+  "homepage": "about:blank",
+  "require": {
+    "magento-hackathon/magento-composer-installer": "*",
+    "endroid/qr-code": "^1.9.3"
+  },
+  "extra": {
+    "map": [
+      ["app/code/community/InstaSIM/KbankQR/*", "app/code/community/InstaSIM/KbankQR/"],
+      ["app/etc/modules/InstaSIM_KbankQR.xml", "app/etc/modules/InstaSIM_KbankQR.xml"],
+      ["app/design/frontend/base/default/layout/kbankqr.xml", "app/design/frontend/base/default/layout/kbankqr.xml"],
+      ["app/design/adminhtml/default/default/template/instasim/kbankqr/*", "app/design/adminhtml/default/default/template/instasim/kbankqr/"],
+      ["app/design/frontend/base/default/template/instasim/kbankqr/*", "app/design/frontend/base/default/template/instasim/kbankqr/"],
+      ["app/locale/en_US/InstaSIM_KbankQR.csv", "app/locale/en_US/InstaSIM_KbankQR.csv"]
+    ]
+  }
+}

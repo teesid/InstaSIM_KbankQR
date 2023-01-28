@@ -1,0 +1,118 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Open Software License (OSL 3.0)
+ * that is available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/osl-3.0.php
+ *
+ * @category   Mage
+ * @package    InstaSIM_KbankQR
+ * @copyright  Copyright (c) 2022 Instasim Co. Ltd.
+ * @copyright  Copyright (c) 2008 Andrej Sinicyn
+ * @copyright  Copyright (c) 2010-2018 Phoenix Media GmbH & Co. KG (http://www.phoenix-media.eu)
+ * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ */
+ -->
+<config>
+    <modules>
+        <InstaSIM_KbankQR>
+            <version>1.3.0</version>
+        </InstaSIM_KbankQR>
+    </modules>
+    <global>
+        <models>
+            <kbankqr>
+                <class>InstaSIM_KbankQR_Model</class>
+            </kbankqr>
+        </models>
+        <resources>
+            <kbankqr_setup>
+                <setup>
+                    <module>InstaSIM_KbankQR</module>
+                </setup>
+            </kbankqr_setup>
+        </resources>
+        <blocks>
+            <kbankqr>
+                <class>InstaSIM_KbankQR_Block</class>
+            </kbankqr>
+        </blocks>
+        <helpers>
+            <kbankqr>
+                <class>InstaSIM_KbankQR_Helper</class>
+            </kbankqr>
+        </helpers>
+        <events>
+            <sales_order_payment_save_before>
+                <observers>
+                    <payment_before_save>
+                        <class>kbankqr/observer</class>
+                        <method>beforeOrderPaymentSave</method>
+                    </payment_before_save>
+                </observers>
+            </sales_order_payment_save_before>
+        </events>
+    </global>
+    <default>
+        <payment>
+            <kbankqr>
+                <active>0</active>
+                <title>KBank QR</title>
+                <model>kbankqr/kbankQR</model>
+                <order_status>1</order_status>
+                <allowspecific>0</allowspecific>
+                <form_block_type>0</form_block_type>
+                <show_qr_in_pdf>1</show_qr_in_pdf>
+            </kbankqr>
+        </payment>
+    </default>
+    <adminhtml>
+        <translate>
+            <modules>
+                <InstaSIM_KbankQR>
+                    <files>
+                        <default>InstaSIM_KbankQR.csv</default>
+                    </files>
+                </InstaSIM_KbankQR>
+            </modules>
+        </translate>
+        <layout>
+            <updates>
+                <kbankqr>
+                    <file>kbankqr.xml</file>
+                </kbankqr>
+            </updates>
+        </layout>
+    </adminhtml>
+    <frontend>
+        <routers>
+            <kbankqr>
+                <use>standard</use>
+                <args>
+                    <module>InstaSIM_KbankQR</module>
+                    <frontName>kbankqr</frontName>
+                </args>
+            </kbankqr>
+        </routers>
+        <translate>
+            <modules>
+                <InstaSIM_KbankQR>
+                    <files>
+                        <default>InstaSIM_KbankQR.csv</default>
+                    </files>
+                </InstaSIM_KbankQR>
+            </modules>
+        </translate>
+        <layout>
+            <updates>
+                <kbankqr module="kbankqr">
+                    <file>kbankqr.xml</file>
+                </kbankqr>
+            </updates>
+        </layout>
+    </frontend>
+</config>

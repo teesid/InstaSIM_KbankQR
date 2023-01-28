@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * InstaSIM_KbankQR extension
+ * 
+ * NOTICE OF LICENSE
+ * 
+ * This source file is subject to the MIT License
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/mit-license.php
+ * 
+ * @category       InstaSIM
+ * @package        InstaSIM_KbankQR
+ * @copyright      Copyright (c) 2023
+ * @license        http://opensource.org/licenses/mit-license.php MIT License
+ */
+-->
+<config>
+  <api>
+    <resources>
+      <kbankqr_kbankqr translate="title" module="kbankqr">
+        <model>kbankqr/kbankQR_api</model>
+        <title>KbankQR API</title>
+        <acl>kbankqr/kbankqr</acl>
+        <methods>
+          <invoiceMany translate="title" module="kbankqr">
+            <title>Create invoices based on list of order increment IDs, amounts and comments.</title>
+          </invoiceMany>
+        </methods>
+      </kbankqr_kbankqr>
+    </resources>
+    <resources_alias>
+      <kbankqr>kbankqr_kbankqr</kbankqr>
+    </resources_alias>
+    <v2>
+      <resources_function_prefix>
+         <kbankqr>kbankqr</kbankqr>
+      </resources_function_prefix>
+    </v2>
+    <acl>
+      <resources>
+        <kbankqr translate="title" module="kbankqr">
+          <title>KbankQR</title>
+          <sort_order>5</sort_order>
+          <kbankqr translate="title" module="kbankqr">
+            <title>KbankQR</title>
+          </kbankqr>
+        </kbankqr>
+      </resources>
+    </acl>
+  </api>
+</config>
