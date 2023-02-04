@@ -29,14 +29,14 @@
 <layout version="0.1.0">
 
     <checkout_onepage_success>
-        <reference name="checkout.success">
-            <block type="kbankqr/checkout_success" name="kbankqr.checkout.success" template="instasim/kbankqr/checkout/success.phtml"/>
+        <reference name="content">
+            <block type="kbankqr/checkout_success" name="kbankqr.checkout.success" after="checkout.success" template="instasim/kbankqr/checkout/success.phtml"/>
         </reference>
     </checkout_onepage_success>
 
     <checkout_multishipping_success>
-        <reference name="checkout_success">
-            <block type="kbankqr/checkout_success" name="kbankqr.checkout.success" template="instasim/kbankqr/checkout/success.phtml"/>
+        <reference name="content">
+            <block type="kbankqr/checkout_success" name="kbankqr.checkout.success" after="checkout.success" template="instasim/kbankqr/checkout/success.phtml"/>
         </reference>
     </checkout_multishipping_success>
 

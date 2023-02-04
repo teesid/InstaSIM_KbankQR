@@ -27,7 +27,7 @@
 <?php if ($this->getOrderUsesKbankQR()): ?>
     <?php $_helper = Mage::helper('kbankqr'); ?>
     <p>
-        <?php echo $_helper->__("You can scan the PromptPay QR code below to pay for your order.\nThis QR code will also be sent in your order confirmation e-mail.") ?>
+        <?php echo $_helper->__("You can scan the PromptPay QR code below to pay for your order.<br/>This QR code will also be sent in your order confirmation e-mail."); ?>
     </p>
     <?php echo $_helper->getQrCodeImageTag($this->getOrderId()) ?>
 <?php endif; ?>

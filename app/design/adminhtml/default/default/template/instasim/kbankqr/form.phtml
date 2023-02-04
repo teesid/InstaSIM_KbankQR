@@ -22,7 +22,7 @@
     <ul id="payment_form_<?php echo $this->getMethodCode(); ?>" style="display:none">
         <?php if ($_instructions = $this->getInstructions()): ?>
             <br />
-            <?php echo $_instructions ?><br />
+            <?php echo nl2br($_instructions); ?><br />
         <?php endif; ?>
     </ul>
 </fieldset>

@@ -16,65 +16,74 @@
 
 class InstaSIM_KbankQR_Model_KbankQR_Api extends Mage_Api_Model_Resource_Abstract
 {
-  public function invoiceMany($orderInfoList = array())
-  {
-    $ret = array();
-    foreach ($orderInfoList as $oi) {
-      $result = array(
-        'increment_id' => $oi->increment_id,
-        'invoice_id' => NULL,
-        'error' => '',
-      );
+    public function invoiceMany($orderInfoList = array())
+    {
+        $ret = array();
+        foreach ($orderInfoList as $oi) {
+            $result = array(
+                'increment_id' => $oi->increment_id,
+                'invoice_id' => NULL,
+                'error' => '',
+            );
 
-      try {
-        # check if the order exists
-        $o = Mage::getModel('sales/order')->loadByIncrementId($oi->increment_id);
-        if (!$o->getId()) {
-          $result['error'] = 'Order not found';
-          $ret[] = $result;
-          continue;
+            try {
+                # check if the order exists
+                $o = Mage::getModel('sales/order')->loadByIncrementId($oi->increment_id);
+                if (!$o->getId()) {
+                    $result['error'] = 'Order not found';
+                    $ret[] = $result;
+                    continue;
+                }
+
+                # TODO: check if the order is already invoiced, if so then just return the 
+                #       invoice id and skip the rest.
+                # check if it is invoiceable
+                if (!$o->canInvoice()) {
+                    $result['error'] = 'Order cannot be invoiced';
+                    $ret[] = $result;
+                    continue;
+                }
+
+                # check if the payment method is kbankqr
+                $payment = $o->getPayment();
+                if ($payment->getMethod() != 'kbankqr') {
+                    $result['error'] = 'Payment method is not kbankqr';
+                    $ret[] = $result;
+                    continue;
+                }
+
+                # check if the amount matches
+                $total = sprintf('%.2f', $o->getGrandTotal());
+                if ($total != $oi->amount) {
+                    $result['error'] = "Amount mismatch, should be {$total} != {$oi->amount}";
+                    $ret[] = $result;
+                    continue;
+                }
+
+                # create invoice
+                $invoice = Mage::getModel('sales/service_order', $o)->prepareInvoice();
+                $invoice->register();
+                $invoice->getOrder()->setCustomerNoteNotify(true);
+                $invoice->getOrder()->setIsInProcess(true);
+                $o->addStatusHistoryComment($oi->comment, false);
+                $transactionSave = Mage::getModel('core/resource_transaction')
+                    ->addObject($invoice)
+                    ->addObject($invoice->getOrder());
+                $transactionSave->save();
+                $result['invoice_id'] = $invoice->getIncrementId();
+
+                try {
+                    $invoice->sendEmail(true, '');
+                    $invoice->setEmailSent(true)->save();
+                } catch (Exception $e) {
+                    Mage::logException($e);
+                }
+            } catch (Exception $e) {
+                $result['error'] = $e->getMessage();
+            }
+
+            $ret[] = $result;
         }
-
-        # check if it is invoiceable
-        if (!$o->canInvoice()) {
-          $result['error'] = 'Order cannot be invoiced';
-          $ret[] = $result;
-          continue;
-        }
-
-        # check if the payment method is kbankqr
-        $payment = $o->getPayment();
-        if ($payment->getMethod() != 'kbankqr') {
-          $result['error'] = 'Payment method is not kbankqr';
-          $ret[] = $result;
-          continue;
-        }
-
-        # check if the amount matches
-        $total = sprintf('%.2f', $o->getGrandTotal());
-        if ($total != $oi->amount) {
-          $result['error'] = "Amount mismatch, should be {$total} != {$oi->amount}";
-          $ret[] = $result;
-          continue;
-        }
-
-        # create invoice
-        $invoice = Mage::getModel('sales/service_order', $o)->prepareInvoice();
-        $invoice->register();
-        $invoice->getOrder()->setCustomerNoteNotify(true);
-        $invoice->getOrder()->setIsInProcess(true);
-        $o->addStatusHistoryComment($oi->comment, false);
-        $transactionSave = Mage::getModel('core/resource_transaction')
-          ->addObject($invoice)
-          ->addObject($invoice->getOrder());
-        $transactionSave->save();
-        $result['invoice_id'] = $invoice->getIncrementId();
-      } catch (Exception $e) {
-        $result['error'] = $e->getMessage();
-      }
-
-      $ret[] = $result;
+        return $ret;
     }
-    return $ret;
-  }
 }

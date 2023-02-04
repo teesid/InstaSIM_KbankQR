@@ -157,7 +157,9 @@ class InstaSIM_KbankQR_Helper_Data extends Mage_Core_Helper_Abstract {
      */
     public function getQrCodeImageTag($orderIncrementId) {
         # get the url for the KbankQR ontroller
-        $url = Mage::getUrl('kbankqr', array('order' => $orderIncrementId));
+        # we always use the default frontend store ID because the QR is the same
+        # for all stores and if the admin store id is auto chosen then the url won't work
+        $url = Mage::getUrl('kbankqr', array('_store' => 1, 'order' => $orderIncrementId));
         return "<img src=\"{$url}\" alt=\"PromptPay QR Code\" style=\"margin: 0 auto;\" />";
     }
 }

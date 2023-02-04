@@ -22,7 +22,10 @@
     <?php echo $this->getMethod()->getTitle(); ?>
     <?php if ($_instructions = $this->getInstructions()): ?>
         {{pdf_row_separator}}
-        <?php echo $_instructions; ?>
+        <?php echo nl2br($_instructions);; ?>
+        <?php if ($_order = $this->getInfo()->getOrder()): ?>
+            <?php echo $_helper->getQrCodeImageTag($_order->getIncrementId()); ?>
+        <?php endif; ?>
     <?php endif; ?>
     {{pdf_row_separator}}
 <?php endif; ?>

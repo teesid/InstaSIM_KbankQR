@@ -20,7 +20,8 @@
       ["app/design/frontend/base/default/layout/kbankqr.xml", "app/design/frontend/base/default/layout/kbankqr.xml"],
       ["app/design/adminhtml/default/default/template/instasim/kbankqr/*", "app/design/adminhtml/default/default/template/instasim/kbankqr/"],
       ["app/design/frontend/base/default/template/instasim/kbankqr/*", "app/design/frontend/base/default/template/instasim/kbankqr/"],
-      ["app/locale/en_US/InstaSIM_KbankQR.csv", "app/locale/en_US/InstaSIM_KbankQR.csv"]
+      ["app/locale/en_US/InstaSIM_KbankQR.csv", "app/locale/en_US/InstaSIM_KbankQR.csv"],
+      ["app/locale/th_TH/InstaSIM_KbankQR.csv", "app/locale/th_TH/InstaSIM_KbankQR.csv"]
     ]
   }
 }

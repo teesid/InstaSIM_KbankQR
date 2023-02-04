@@ -21,7 +21,9 @@
     <?php echo $this->getMethod()->getTitle(); ?><br />
     <?php $_helper = Mage::helper('kbankqr'); ?>
     <?php if ($_instructions = $this->getInstructions()): ?>
-        <?php echo $_instructions; ?><br />
-        <?php echo Mage::helper('kbankqr')->getQrCodeImageTag($this->getInfo()->getOrder()->getIncrementId()); ?>
+        <?php echo nl2br($_instructions); ?><br />
+        <?php if ($_order = $this->getInfo()->getOrder()): ?>
+            <?php echo $_helper->getQrCodeImageTag($_order->getIncrementId()); ?>
+        <?php endif; ?>
     <?php endif; ?>
 </p>
